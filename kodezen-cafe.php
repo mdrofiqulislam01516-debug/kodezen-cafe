@@ -20,6 +20,7 @@ if ( ! defined( 'ABSPATH') ) {
 
 
 require_once  __DIR__ . '/vendor/autoload.php';
+require_once plugin_dir_path(__FILE__) . 'includes/Frontend/KZ_Cafe_Order_Form.php';
 
 
 
@@ -90,7 +91,7 @@ final class Kodezen_Cafe {
             new \kodezen\cafe\Admin\kz_cafe_MetaBox();
             new \kodezen\cafe\Admin\kz_cafe_Order_MetaBox();
             new \kodezen\cafe\Admin\kz_cafe_Order_Actions();
-            new \kodezen\cafe\Admin\kz_cafe_Roles();
+          //  new \kodezen\cafe\Admin\kz_cafe_Roles();
     }else{
             new \kodezen\cafe\Frontend\kz_cafe_Order_Form();
             new \kodezen\cafe\Frontend\kz_cafe_Shortcode();
@@ -113,6 +114,8 @@ final class Kodezen_Cafe {
             update_option( 'kz_cafe_installed', time() );
         }
         update_option( 'kz_cafe_version', KZ_CAFE_VERSION );
+
+        flush_rewrite_rules();
     }
 
     

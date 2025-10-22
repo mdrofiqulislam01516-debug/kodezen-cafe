@@ -10,7 +10,7 @@ class kz_cafe_Roles {
             add_role(
                 'kz_cafe_administrator',              
                 'Kz Cafe Administrator',              
-                [
+                array(
                     'activate_plugins'          => true,
                     'delete_others_pages'       => true,
                     'delete_others_posts'       => true,
@@ -48,7 +48,7 @@ class kz_cafe_Roles {
                     'upload_files'              => true,
                     'customize'                 => true,
                     'delete_site'               => true,
-                ]
+                )
             );
     }
 }

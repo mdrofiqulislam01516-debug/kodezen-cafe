@@ -38,8 +38,8 @@ class kz_cafe_Order_MetaBox {
         $total_price    = get_post_meta( $post->ID, '_kz_cafe_total_price', true );
         $quantity       = get_post_meta( $post->ID, '_kz_cafe_order_quantity', true );
         $status         = get_post_meta( $post->ID, '_kz_cafe_order_status', true );
-        // $user_id        = get_post_meta( $post_id, '_kz_cafe_user_id', true );
-        // $user_email     = get_post_meta( $post_id, '_kz_cafe_user_email', true );
+         $user_id        = get_post_meta( $post->ID, '_kz_cafe_user_id', true );
+         $user_email     = get_post_meta( $post->ID, '_kz_cafe_user_email', true );
 
         ?>
         <table class="form-table">
@@ -77,10 +77,10 @@ class kz_cafe_Order_MetaBox {
         </table>
         <?php
 
-//         if ( $user_id ) {
-//     echo '<p><strong>User ID:</strong> ' . esc_html( $user_id ) . '</p>';
-//     echo '<p><strong>User Email:</strong> ' . esc_html( $user_email ) . '</p>';
-// }
+        if ( $user_id ) {
+    echo '<p><strong>User ID:</strong> ' . esc_html( $user_id ) . '</p>';
+    echo '<p><strong>User Email:</strong> ' . esc_html( $user_email ) . '</p>';
+}
     }
 
     /**

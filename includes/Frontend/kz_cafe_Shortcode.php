@@ -7,12 +7,7 @@ namespace kodezen\cafe\Frontend;
 class kz_cafe_Shortcode {
 
     function __construct() {
-        add_shortcode( 'kodezen-cafe', [ $this, 'render_menu_items' ] );
-
-        
-
-       
-    
+        add_shortcode( 'kodezen-cafe', [ $this, 'render_menu_items' ] );  
     }
 
     /**
@@ -62,10 +57,11 @@ class kz_cafe_Shortcode {
                         <button onclick="window.location.href='<?php echo wp_login_url(site_url('/order-form/?item_id='. get_the_ID())); ?>'">
                             Login 
                         </button>
-                        <?php endif; ?></p>
+                        <?php endif; ?>
+                    </p>
 
-                        </div>
-                         <?php
+                </div>
+                <?php
             }
 
             echo '</div>';
@@ -78,3 +74,5 @@ class kz_cafe_Shortcode {
     }
 
 }
+
+http://kodezen-academyt.local/order-form/
