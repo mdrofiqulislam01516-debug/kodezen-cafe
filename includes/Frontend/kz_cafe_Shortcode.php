@@ -50,13 +50,13 @@ class kz_cafe_Shortcode {
                         <?php echo $available === 'yes' ? '✅ Available' : '❌ Not Available'; ?>
                     </p><p>
                         <?php if ( is_user_logged_in() ) : ?>
-                        <button onclick="window.location.href='<?php echo site_url('/order-form/?item_id='. get_the_ID()); ?>'">
-                            Order Now
-                         </button>
-                        <?php else : ?>
-                        <button onclick="window.location.href='<?php echo wp_login_url(site_url('/order-form/?item_id='. get_the_ID())); ?>'">
-                            Login 
-                        </button>
+                        
+
+                         <a href='<?php echo site_url('order-form?item_id='. get_the_ID()); ?>'">
+                            CHECKOUT
+                         </a>
+                       
+                        
                         <?php endif; ?>
                     </p>
 
@@ -75,4 +75,3 @@ class kz_cafe_Shortcode {
 
 }
 
-http://kodezen-academyt.local/order-form/

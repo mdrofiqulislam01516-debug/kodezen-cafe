@@ -18,12 +18,6 @@ if ( ! defined( 'ABSPATH') ) {
     exit;
 }
 
-
-require_once  __DIR__ . '/vendor/autoload.php';
-require_once plugin_dir_path(__FILE__) . 'includes/Frontend/KZ_Cafe_Order_Form.php';
-
-
-
 /**
  * The main plugin class
  */
@@ -46,6 +40,8 @@ final class Kodezen_Cafe {
         register_activation_hook( __FILE__, [ $this, 'kz_activate' ] );
 
         add_action( 'plugins_loaded', [ $this, 'kz_cafe_init' ] );
+
+        require_once  __DIR__ . '/vendor/autoload.php';
     }
 
     /**
@@ -83,22 +79,21 @@ final class Kodezen_Cafe {
 
     public function kz_cafe_init() {
 
-    if ( is_admin() ) {
+    
              //new kodezen\cafe\kz_cafe_Assets();
-            new \kodezen\cafe\Admin\kz_cafe_CPT();
-            new \kodezen\cafe\Admin\kz_cafe_Order();
+            new \kodezen\cafe\Admin\kz_cafe();           
             new \kodezen\cafe\Admin\kz_cafe_Taxonomy();
             new \kodezen\cafe\Admin\kz_cafe_MetaBox();
+            new \kodezen\cafe\Admin\kz_cafe_Order();
             new \kodezen\cafe\Admin\kz_cafe_Order_MetaBox();
             new \kodezen\cafe\Admin\kz_cafe_Order_Actions();
           //  new \kodezen\cafe\Admin\kz_cafe_Roles();
-    }else{
-            new \kodezen\cafe\Frontend\kz_cafe_Order_Form();
-            new \kodezen\cafe\Frontend\kz_cafe_Shortcode();
-            new \kodezen\cafe\Frontend\kz_cafe_Form_Shortcode();
-            new \kodezen\cafe\Frontend\kz_cafe_Order_List();
+   
+        new \kodezen\cafe\Frontend\kz_cafe_Shortcode();
+        new \kodezen\cafe\Frontend\kz_cafe_Order_Form();
+        new \kodezen\cafe\Frontend\kz_cafe_Order_List();
     }
-    }
+    
 
     /**
      * Install time and update version 

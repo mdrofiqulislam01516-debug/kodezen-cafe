@@ -47,7 +47,7 @@ class kz_cafe_Order_Actions {
         }
 
         if ( 'total_price' === $column ) {
-            $total_price = get_post_meta( $post_id, '_kz_cafe_total_price', true );
+            $total_price = get_post_meta( $post_id, '_kz_cafe_price', true );
             echo number_format( floatval( $total_price ), 2 );
         }
 

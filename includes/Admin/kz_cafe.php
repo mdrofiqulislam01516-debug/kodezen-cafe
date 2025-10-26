@@ -1,7 +1,7 @@
 <?php
 namespace kodezen\cafe\Admin;
 
-class kz_cafe_CPT{
+class kz_cafe{
 
     /**
      * Main CPT class

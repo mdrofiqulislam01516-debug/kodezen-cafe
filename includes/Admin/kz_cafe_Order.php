@@ -47,3 +47,4 @@ class kz_cafe_Order {
         register_post_type( 'kz_cafe_order', $args );
     }
 }
+

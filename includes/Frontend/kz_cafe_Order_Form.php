@@ -1,62 +1,86 @@
 <?php
-namespace Kodezen\Cafe\Frontend;
+namespace kodezen\cafe\Frontend;
 
 class KZ_Cafe_Order_Form {
 
-    public function __construct() {
+    function __construct() {
+        add_shortcode('kodezen-cafe-order', [$this, 'render_order_form']); 
 
-         // AJAX actions
-        add_action('wp_ajax_kz_cafe_submit_order', [$this, 'handle_order_submission']);
-        add_action('wp_ajax_nopriv_kz_cafe_submit_order', [$this, 'handle_order_submission']);
-
-        // Enqueue JS
-        add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
+        add_action('admin_post_kz_cafe_submit_order', [$this, 'handle_order_submission']);
+      
     }
 
-    /**
-     * Enqueue front-end script
-     */
-    public function enqueue_scripts() {
-        wp_enqueue_script('kz-cafe-frontend',plugins_url('js/kz_cafe_Order.js', __FILE__ ), ['jquery'], false, true);
+    /** * Render Order Form */ 
+    public function render_order_form() {
+        if (!is_user_logged_in()) {
+            wp_redirect(wp_login_url(get_permalink()));
+            exit;
+        }
 
-        wp_localize_script('kz-cafe-frontend', 'kzCafeOrder', [
-            'ajax_url' => admin_url('admin-ajax.php'),
-            'nonce'    => wp_create_nonce('kz_cafe_order_nonce')
-        ]);
+        $current_user = wp_get_current_user();
+
+        $item_id = isset($_GET['item_id']) ? intval($_GET['item_id']) : '';
+
+        // var_dump($order_item_title);
+        // exit;          
+
+        ob_start(); ?>
+
+        <form method="post" action="<?php echo admin_url('admin-post.php'); ?>">
+
+            <input type="hidden" name="action" value="kz_cafe_submit_order">
+            <?php wp_nonce_field('kz_cafe_order_nonce'); ?>
+
+
+            <p><label>Name: <input type="text" name="customer_name" value="<?php echo esc_attr($current_user->display_name); ?>" required></label></p> 
+            <p><label>Email: <input type="email" name="customer_email" value="<?php echo esc_attr($current_user->user_email); ?>" required></label></p> 
+            <p><label>Order Items: <input name="order_items" required><?php echo esc_textarea($item_id); ?></label></p>
+            <p><label>Quantity: <input type="number" name="quantity" min="1" step="1" required></label></p>
+            
+            
+
+            <input type="hidden" name="user_id" value="<?php echo esc_attr($current_user->ID); ?>">
+            
+            <button type="submit">ORDER NOW</button>
+        </form>
+        <?php
+        return ob_get_clean();
     }
 
-    /**
-     * Handle AJAX order submission
-     */
-     public function handle_order_submission() {
-        check_ajax_referer('kz_cafe_order_nonce', 'nonce');
+    public function handle_order_submission() {
 
-        $name  = sanitize_text_field($_POST['customer_name']);
-        $email = sanitize_email($_POST['customer_email']);
-        $items = sanitize_textarea_field($_POST['order_items']);
-        $price = floatval($_POST['total_price']);
-        $qty   = intval($_POST['quantity']);
-        $user_id = intval($_POST['user_id']);
+        if (!isset($_POST['_wpnonce']) || !wp_verify_nonce($_POST['_wpnonce'], 'kz_cafe_order_nonce')) {
+            wp_die('Security check failed!');
+        }
 
-        // Create a custom post type 'kz_cafe_order' (make sure it's registered)
+        $user_id  = intval($_POST['user_id']);
+        $name     = sanitize_text_field($_POST['customer_name']);
+        $email    = sanitize_email($_POST['customer_email']);
+        $item_id    = sanitize_textarea_field($_POST['order_items']);
+        $qty      = intval($_POST['quantity']);
+        $price    = floatval($_POST['_kz_cafe_price']);
+
+    
+        
+
         $post_id = wp_insert_post([
-            'post_title'  => $name,
+            'post_title'  => $name . ' - ' . current_time('Y-m-d H:i:s'),
             'post_type'   => 'kz_cafe_order',
             'post_status' => 'publish',
+            'post_author' => $user_id,
         ]);
 
         if ($post_id) {
-            update_post_meta($post_id, 'customer_name', $name);
-            update_post_meta($post_id, 'customer_email', $email);
-            update_post_meta($post_id, 'order_items', $items);
-            update_post_meta($post_id, 'total_price', $price);
-            update_post_meta($post_id, 'quantity', $qty);
-            update_post_meta($post_id, 'user_id', $user_id);
+            update_post_meta($post_id, '_kz_cafe_customer_name', $name);
+            update_post_meta($post_id, '_kz_cafe_customer_email', $email);
+            update_post_meta($post_id, '_kz_cafe_order_items', $item_id);
+            update_post_meta($post_id, '_kz_cafe_order_quantity', $qty);
+            update_post_meta($post_id, '_kz_cafe_price', $price);
+            update_post_meta($post_id, '_kz_cafe_order_status', 'pending');
+            update_post_meta($post_id, '_kz_cafe_user_id', $user_id);
 
-            wp_send_json_success('Order submitted successfully!');
-        } else {
-            wp_send_json_error('Failed to submit order.');
+            wp_redirect( admin_url( 'admin.php?page=my-success-page' ) );
+            exit;
         }
     }
 }
-

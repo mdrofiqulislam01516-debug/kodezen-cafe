@@ -35,11 +35,11 @@ class kz_cafe_Order_MetaBox {
         $customer_name  = get_post_meta( $post->ID, '_kz_cafe_customer_name', true );
         $customer_email = get_post_meta( $post->ID, '_kz_cafe_customer_email', true );
         $order_items    = get_post_meta( $post->ID, '_kz_cafe_order_items', true );
-        $total_price    = get_post_meta( $post->ID, '_kz_cafe_total_price', true );
+        $total_price    = get_post_meta( $post->ID, '_kz_cafe_price', true );
         $quantity       = get_post_meta( $post->ID, '_kz_cafe_order_quantity', true );
         $status         = get_post_meta( $post->ID, '_kz_cafe_order_status', true );
-         $user_id        = get_post_meta( $post->ID, '_kz_cafe_user_id', true );
-         $user_email     = get_post_meta( $post->ID, '_kz_cafe_user_email', true );
+        $user_id        = get_post_meta( $post->ID, '_kz_cafe_user_id', true );
+        $user_email     = get_post_meta( $post->ID, '_kz_cafe_user_email', true );
 
         ?>
         <table class="form-table">
@@ -56,8 +56,8 @@ class kz_cafe_Order_MetaBox {
                 <td><textarea name="kz_cafe_order_items" id="kz_cafe_order_items" rows="4" style="width:100%;"><?php echo esc_textarea( $order_items ); ?></textarea></td>
             </tr>
             <tr>
-                <th><label for="kz_cafe_total_price"><?php _e( 'Total Price ($)', 'kodezen-cafe' ); ?></label></th>
-                <td><input type="number" name="kz_cafe_total_price" id="kz_cafe_total_price" value="<?php echo esc_attr( $total_price ); ?>" step="0.01" /></td>
+                <th><label for="_kz_cafe_price"><?php _e( 'Total Price ($)', 'kodezen-cafe' ); ?></label></th>
+                <td><input type="number" name="_kz_cafe_price" id="_kz_cafe_price" value="<?php echo esc_attr( $total_price ); ?>" step="0.01" /></td>
             </tr>
             <tr>
                 <th><label for="kz_cafe_order_quantity"><?php _e( 'Quantity', 'kodezen-cafe' ); ?></label></th>
@@ -108,8 +108,8 @@ class kz_cafe_Order_MetaBox {
             update_post_meta( $post_id, '_kz_cafe_order_items', sanitize_textarea_field( $_POST['kz_cafe_order_items'] ) );
         }
 
-        if ( isset( $_POST['kz_cafe_total_price'] ) ) {
-            update_post_meta( $post_id, '_kz_cafe_total_price', sanitize_text_field( $_POST['kz_cafe_total_price'] ) );
+        if ( isset( $_POST['_kz_cafe_price'] ) ) {
+            update_post_meta( $post_id, '_kz_cafe_price', sanitize_text_field( $_POST['_kz_cafe_price'] ) );
         }
 
         if ( isset( $_POST['kz_cafe_order_quantity'] ) ) {
@@ -123,3 +123,4 @@ class kz_cafe_Order_MetaBox {
     }
 
 }
+
