@@ -1,0 +1,19 @@
+{
+    "name": "kodezen/cafe",
+    "description": "Kodezen Cafe is a stylish and lightweight WordPress plugin designed for cafe websites.",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "kodezen team"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "kodezen\\cafe\\": "includes/"
+        },
+        "files": []
+    }
+}
