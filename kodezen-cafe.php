@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Plugin Name:       Kodezen Cafe
  * Plugin URI:        https://kodezen.com/kodezen-cafe/
@@ -19,10 +18,7 @@ if ( ! defined( 'ABSPATH') ) {
     exit;
 }
 
-
 require_once  __DIR__ . '/vendor/autoload.php';
-
-
 
 /**
  * The main plugin class
@@ -41,6 +37,7 @@ final class Kodezen_Cafe {
      */
 
     private function __construct() {
+
         $this->define_construct();
 
         register_activation_hook( __FILE__, [ $this, 'kz_activate' ] );
@@ -55,11 +52,13 @@ final class Kodezen_Cafe {
      */
 
     public static function init() {
+
         static $instance = false;
 
         if ( ! $instance ) {
             $instance = new self();
         }
+
         return $instance;
     }
 
@@ -68,11 +67,12 @@ final class Kodezen_Cafe {
      */
 
     public function define_construct() {
+
         define( 'KZ_CAFE_VERSION', self::version );
         define( 'KZ_CAFE_FILE', __FILE__ );
         define( 'KZ_CAFE_PATH', __DIR__ );
         define( 'KZ_CAFE_URL', plugins_url( '', KZ_CAFE_FILE ) );
-        define( 'KZ_CAFE_ASSETS', KZ_CAFE_URL . '/assets' );
+       
     }
 
     /**
@@ -83,22 +83,19 @@ final class Kodezen_Cafe {
 
     public function kz_cafe_init() {
 
-
-        /**
-         * Backend 
-         */
-  
+            /**
+            * Backend 
+            */
             
             new \kodezen\cafe\Admin\kz_cafe_CPT();
             new \kodezen\cafe\Admin\kz_cafe_Taxonomy();
             new \kodezen\cafe\Admin\kz_cafe_MetaBox();
-            new \kodezen\cafe\Admin\kz_cafe_Order();
-            new \kodezen\cafe\Admin\kz_cafe_Order_MetaBox();
+            new \kodezen\cafe\Admin\kz_cafe_custom_MetaBox();
+            new \kodezen\cafe\Admin\kz_cafe_Order_CPT();
             new \kodezen\cafe\Admin\kz_cafe_Order_Actions();
             new \kodezen\cafe\Admin\kz_cafe_Roles();
             new \kodezen\cafe\Admin\kz_cafe_Customer_Role();
-            
-        
+                    
             /**
              * Frontend
              */
@@ -107,9 +104,9 @@ final class Kodezen_Cafe {
             new \kodezen\cafe\Frontend\kz_cafe_Form_Shortcode();
             new \kodezen\cafe\Frontend\kz_cafe_Order_Form();            
             new \kodezen\cafe\Frontend\kz_cafe_Order_List();
+
     }
     
-
     /**
      * Install time and update version 
      * 
@@ -124,9 +121,7 @@ final class Kodezen_Cafe {
             update_option( 'kz_cafe_installed', time() );
         }
         update_option( 'kz_cafe_version', KZ_CAFE_VERSION );
-    }
-
-    
+    }    
 }
 
 /**

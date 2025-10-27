@@ -7,14 +7,18 @@ namespace kodezen\cafe\Admin;
 
 class kz_cafe_Order_Actions {
 
-    function __construct() {
+    /**
+    * Add custom column
+    */
 
-        // Add custom column
+    function __construct() {
 
         add_filter( 'manage_kz_cafe_order_posts_columns', [ $this, 'add_order_columns' ] );
         add_action( 'manage_kz_cafe_order_posts_custom_column', [ $this, 'render_order_columns' ], 10, 2 );
 
-        // Handle approve/cancel action
+        /**
+         * Handle approve/cancel action
+         */
 
         add_action( 'admin_init', [ $this, 'handle_order_actions' ] );
     }
@@ -24,10 +28,13 @@ class kz_cafe_Order_Actions {
      */
 
     public function add_order_columns( $columns ) {
+
+        $columns['product']      = __( 'Product', 'kodezen-cafe' );
         $columns['quantity']     = __( 'Quantity', 'kodezen-cafe' );
         $columns['order_items']  = __( 'Order Items', 'kodezen-cafe' );
         $columns['total_price']  = __( 'Total Price ($)', 'kodezen-cafe' );
         $columns['order_status'] = __( 'Status / Action', 'kodezen-cafe' );
+
         return $columns;
     }
 
@@ -36,6 +43,17 @@ class kz_cafe_Order_Actions {
      */
 
     public function render_order_columns( $column, $post_id ) {
+
+        if ( 'product' === $column ) {
+            $product_id = get_post_meta( $post_id, '_kz_cafe_product_id', true );
+
+            if ( $product_id ) {
+                echo esc_html( get_the_title($product_id) ) . ' (ID: ' . intval($product_id) . ')';
+            } else {
+                echo '<em>No Product</em>';
+            }
+        }
+
         if ( 'quantity' === $column ) {
             $quantity = get_post_meta( $post_id, '_kz_cafe_order_quantity', true );
             echo intval( $quantity );
@@ -71,22 +89,68 @@ class kz_cafe_Order_Actions {
      */
 
     public function handle_order_actions() {
+
         if ( ! isset( $_GET['kz_action'], $_GET['order_id'] ) ) return;
+
         if ( ! current_user_can( 'edit_posts' ) ) return;
+
         if ( ! wp_verify_nonce( $_GET['_wpnonce'], 'kz_cafe_order_action' ) ) return;
 
-        $order_id = intval( $_GET['order_id'] );
+            $order_id = intval( $_GET['order_id'] );
+
+            $items = get_post_meta( $order_id, '_kz_cafe_order_items', true );
+            $quantity = intval( get_post_meta( $order_id, '_kz_cafe_order_quantity', true ) );
+
+        /**
+         * aprove
+         */
 
         if ( $_GET['kz_action'] === 'approve' ) {
+
             update_post_meta( $order_id, '_kz_cafe_order_status', 'approved' );
+
+             /**
+              * _kz_cafe_stock meta key
+              */ 
+
+            $product_id = intval( $items );
+            $current_stock = intval( get_post_meta( $product_id, '_kz_cafe_stock_value', true ) );
+
+            if ( $current_stock > 0 ) {
+                $new_stock = max( 0, $current_stock - $quantity );
+                update_post_meta( $product_id, '_kz_cafe_stock_value', $new_stock );
+            }
+
+        /**
+         * unavailable 
+         */
+
+            if ( $new_stock <= 0 ) {
+                update_post_meta( $product_id, '_kz_cafe_order_status', 'out_of_stock' );
+            }
+
         }
+
+        /**
+        * Cancel 
+        */
 
         if ( $_GET['kz_action'] === 'cancel' ) {
             update_post_meta( $order_id, '_kz_cafe_order_status', 'cancelled' );
+
+            $product_id = intval( get_post_meta( $order_id, '_kz_cafe_product_id', true ) );
+            $quantity   = intval( get_post_meta( $order_id, '_kz_cafe_order_quantity', true ) );
+
+            if ( $product_id > 0 ) {
+                $current_stock = intval( get_post_meta( $product_id, '_kz_cafe_stock_value', true ) );
+                $new_stock = $current_stock + $quantity;
+                update_post_meta( $product_id, '_kz_cafe_stock_value', $new_stock );
+
+                //error_log("Cancel: new stock for product {$product_id} is {$new_stock}");
+            }
         }
 
         wp_redirect( remove_query_arg( ['kz_action','order_id','_wpnonce'] ) );
         exit;
     }
 }
-

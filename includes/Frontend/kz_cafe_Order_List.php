@@ -7,6 +7,10 @@ namespace kodezen\cafe\Frontend;
 
 class kz_cafe_Order_List {
 
+    /**
+     * Shirtcode register hook 
+     */
+
     function __construct() {
         add_shortcode( 'kodezen-cafe-order-list', [ $this, 'render_order_list' ] );
     }
@@ -22,7 +26,6 @@ class kz_cafe_Order_List {
 
         $current_user = wp_get_current_user();
         $email        = $current_user->user_email;
-
         $args = [
             'post_type'      => 'kz_cafe_order',
             'posts_per_page' => -1,
@@ -58,6 +61,7 @@ class kz_cafe_Order_List {
 
             echo '</table>';
             wp_reset_postdata();
+
         } else {
             echo '<p>No orders found.</p>';
         }

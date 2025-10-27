@@ -8,8 +8,17 @@ class kz_cafe_CPT{
      */
 
     function __construct() {
-   
+
+        /**
+         * CPT register hook 
+         */
+        
         add_action( 'init', [ $this, 'kz_cafe_register' ] );
+
+        /**
+         * add new button hide hook 
+         */
+
         add_action( 'admin_head', [ $this, 'hide_add_new_button' ] );
     }
 
@@ -53,15 +62,14 @@ class kz_cafe_CPT{
             'show_in_menu'       => true,
             'taxonomies'         => ['kz_cafe_category'],               
             'capability_type'    => 'post',
-            'capabilities'       => [
-               
+            'capabilities'       => [               
             ],
             'map_meta_cap'       => true,                   
             'has_archive'        => true,               
             'rewrite'            => [ 'slug' => 'kodezen-cafe' ], 
             'menu_position'      => 5,
             'menu_icon'          => 'dashicons-coffee', 
-            'supports'           => [ 'title', 'editor', 'thumbnail', 'excerpt' ],
+            'supports'           => [ 'title', 'editor', 'thumbnail', ],
         ];
 
         register_post_type( 'kodezen_cafe', $args );
@@ -78,10 +86,6 @@ class kz_cafe_CPT{
             echo '<style>.page-title-action { display: none !important; }</style>';
         }
     }
-
-    // public function enqueue_assets() {
-    //     wp_enqueue_style( 'kz-cafe-admin-style' );
-    // }
 }
 
 

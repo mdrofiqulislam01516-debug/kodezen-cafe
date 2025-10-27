@@ -6,7 +6,12 @@ namespace kodezen\cafe\Admin;
  */
 class kz_cafe_MetaBox {
 
+    /**
+     * register hook
+     */
+
     function __construct() {
+
         add_action( 'add_meta_boxes', [ $this, 'add_metabox' ] );
         add_action( 'save_post', [ $this, 'save_metabox' ] );
     }
@@ -14,6 +19,7 @@ class kz_cafe_MetaBox {
     /**
      * Register meta box
      */
+
     public function add_metabox() {
         add_meta_box(
             'kz_cafe_menu_details',
@@ -28,18 +34,21 @@ class kz_cafe_MetaBox {
     /**
      * Display field
      */
+
     public function render_metabox( $post ) {
 
-        // Nonce field for security
+        /**
+         * Nonce
+         */ 
 
         wp_nonce_field( 'kz_cafe_save_meta', 'kz_cafe_meta_nonce' );
-
-        // Get existing values
 
         $price       = get_post_meta( $post->ID, '_kz_cafe_price', true );
         $ingredients = get_post_meta( $post->ID, '_kz_cafe_ingredients', true );
         $available   = get_post_meta( $post->ID, '_kz_cafe_available', true );
+
         ?>
+
         <table class="form-table">
             <tr>
                 <th><label for="kz_cafe_price"><?php _e( 'Price ($)', 'kodezen-cafe' ); ?></label></th>
@@ -54,31 +63,41 @@ class kz_cafe_MetaBox {
                 <td>
                     <select name="kz_cafe_available" id="kz_cafe_available">
                         <option value="yes" <?php selected( $available, 'yes' ); ?>><?php _e( 'Yes', 'kodezen-cafe' ); ?></option>
-                        <option value="no" <?php selected( $available, 'no' ); ?>><?php _e( 'No', 'kodezen-cafe' ); ?></option>
+                        <option value="no"  <?php selected( $available, 'no' ); ?>><?php _e( 'No', 'kodezen-cafe' ); ?></option>
                     </select>
                 </td>
             </tr>
         </table>
+
         <?php
     }
 
     /**
      * Save meta box data
      */
+
     public function save_metabox( $post_id ) {
 
-        // Verify nonce
+        /**
+         * Verify nonce
+         */
+
         if ( ! isset( $_POST['kz_cafe_meta_nonce'] ) ||
              ! wp_verify_nonce( $_POST['kz_cafe_meta_nonce'], 'kz_cafe_save_meta' ) ) {
             return;
         }
 
-        // Check autosave or permission
+        /**
+         * Check
+         */ 
 
         if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
+
         if ( ! current_user_can( 'edit_post', $post_id ) ) return;
 
-        // Save values
+        /**
+         * save values 
+         */
         
         if ( isset( $_POST['kz_cafe_price'] ) ) {
             update_post_meta( $post_id, '_kz_cafe_price', sanitize_text_field( $_POST['kz_cafe_price'] ) );

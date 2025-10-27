@@ -4,17 +4,21 @@ namespace kodezen\cafe\Admin;
 /**
  * Order CPT class
  */
-class kz_cafe_Order {
+class kz_cafe_Order_CPT {
 
+    /**
+     * Register Hook
+     */
+    
     function __construct() {
-        add_action( 'init', [ $this, 'register_order_cpt' ] );
+        add_action( 'init', [ $this, 'kz_cafe_order_register' ] );
     }
 
     /**
      * Order CPT register
      */
 
-    public function register_order_cpt() {
+    public function kz_cafe_order_register() {
 
         $labels = [
             'name'               => __( 'Orders', 'kodezen-cafe' ),

@@ -2,17 +2,21 @@
 namespace kodezen\cafe\Admin;
 
 /**
- * Taxonomy class
- */
+* Taxonomy class
+*/
 class kz_cafe_Taxonomy {
+
+    /**
+    * Register Taxonomy Hook 
+    */
 
     function __construct() {
         add_action( 'init', [ $this, 'kz_cafe_register_taxonomy' ] );
     }
 
     /**
-     * Taxonomy register
-     */
+    * Taxonomy register
+    */
 
     public function kz_cafe_register_taxonomy() {
 
