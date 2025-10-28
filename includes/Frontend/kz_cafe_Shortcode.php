@@ -52,12 +52,12 @@ class kz_cafe_Shortcode {
                     <?php echo $thumbnail; ?>
                     <h3 style="margin:10px 0;"><?php the_title(); ?></h3>
 
-                    <?php if ($price) : ?>
-                        <p><strong>Price:</strong> $<?php echo esc_html($price); ?></p>
+                    <?php if ( $price ) : ?>
+                        <p><strong>Price:</strong> $<?php echo esc_html( $price ); ?></p>
                     <?php endif; ?>
 
-                    <?php if ($ingredients) : ?>
-                        <p><strong>Ingredients:</strong> <?php echo esc_html($ingredients); ?></p>
+                    <?php if ( $ingredients ) : ?>
+                        <p><strong>Ingredients:</strong> <?php echo esc_html( $ingredients ); ?></p>
                     <?php endif; ?>
 
                     <p><strong>Status:</strong> 
@@ -66,7 +66,7 @@ class kz_cafe_Shortcode {
 
                     <?php if (is_user_logged_in()) : ?>
 
-                        <?php if ($stock > 0) : ?>                            
+                        <?php if ( $stock > 0  ) : ?>                            
                             <a href="<?php echo site_url('/order-form?item_id='. get_the_ID()); ?>">Order Now</a>
                         <?php else : ?>
 
@@ -87,7 +87,7 @@ class kz_cafe_Shortcode {
         } else {
 
             echo '<p>No menu items found.</p>';
-            
+
         }
 
         return ob_get_clean();

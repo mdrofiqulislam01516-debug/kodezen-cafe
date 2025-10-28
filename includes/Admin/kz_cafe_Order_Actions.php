@@ -147,7 +147,6 @@ class kz_cafe_Order_Actions {
                 $new_stock = $current_stock + $quantity;
                 update_post_meta( $product_id, '_kz_cafe_stock_value', $new_stock );
 
-                //error_log("Cancel: new stock for product {$product_id} is {$new_stock}");
             }
         }
 
