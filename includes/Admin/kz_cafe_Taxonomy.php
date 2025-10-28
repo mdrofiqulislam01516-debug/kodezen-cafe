@@ -11,7 +11,9 @@ class kz_cafe_Taxonomy {
     */
 
     function __construct() {
+
         add_action( 'init', [ $this, 'kz_cafe_register_taxonomy' ] );
+        
     }
 
     /**

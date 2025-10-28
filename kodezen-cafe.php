@@ -90,7 +90,7 @@ final class Kodezen_Cafe {
             new \kodezen\cafe\Admin\kz_cafe_CPT();
             new \kodezen\cafe\Admin\kz_cafe_Taxonomy();
             new \kodezen\cafe\Admin\kz_cafe_MetaBox();
-            new \kodezen\cafe\Admin\kz_cafe_custom_MetaBox();
+            new \kodezen\cafe\Admin\kz_cafe_Stock_MetaBox();
             new \kodezen\cafe\Admin\kz_cafe_Order_CPT();
             new \kodezen\cafe\Admin\kz_cafe_Order_Actions();
             new \kodezen\cafe\Admin\kz_cafe_Roles();

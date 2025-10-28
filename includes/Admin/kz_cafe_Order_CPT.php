@@ -11,7 +11,9 @@ class kz_cafe_Order_CPT {
      */
     
     function __construct() {
+
         add_action( 'init', [ $this, 'kz_cafe_order_register' ] );
+        
     }
 
     /**

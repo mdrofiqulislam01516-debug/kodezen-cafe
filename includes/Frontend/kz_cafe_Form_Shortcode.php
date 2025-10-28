@@ -12,7 +12,9 @@ class kz_cafe_Form_Shortcode {
      */
 
     function __construct() {
-        add_shortcode('kodezen-cafe-order', [$this, 'render_order_form']);
+
+        add_shortcode( 'kodezen-cafe-order', [ $this, 'render_order_form' ] );
+
     }
 
     /**
@@ -27,8 +29,8 @@ class kz_cafe_Form_Shortcode {
          * Login check
          */
 
-        if (!is_user_logged_in()) {
-            wp_redirect(wp_login_url(get_permalink()));
+        if ( ! is_user_logged_in() ) {
+            wp_redirect( wp_login_url(get_permalink() ) );
             exit;
         }
 
@@ -38,46 +40,48 @@ class kz_cafe_Form_Shortcode {
          * Auto-fill
          */ 
 
-        $order_item_title = '';
-        $total_price = '';
-        $stock_value = '';
+        $order_item_title   = '';
+        $total_price        = '';
+        $stock_value        = '';
 
-        if (isset($_GET['item_id'])) {
-            $post_id = intval($_GET['item_id']);
-            $order_item_title = get_the_title($post_id);
-            $total_price = get_post_meta($post_id, '_kz_cafe_price', true);
-            $stock_value = intval(get_post_meta($post_id, '_kz_cafe_stock_value', true));
+        if ( isset( $_GET[ 'item_id' ] ) ) {
+
+            $post_id            = intval( $_GET[ 'item_id' ] );
+            $order_item_title   = get_the_title( $post_id );
+            $total_price        = get_post_meta( $post_id, '_kz_cafe_price', true );
+            $stock_value        = intval( get_post_meta( $post_id, '_kz_cafe_stock_value', true ) );
         }
 
         ?>
 
         <form id="kz-cafe-order-form" class="kz_cafe_css">
+
             <p><label>Name:
-                <input type="text" name="customer_name" value="<?php echo esc_attr($current_user->display_name); ?>" required>
+                <input type="text" name="customer_name" value="<?php echo esc_attr( $current_user->display_name ); ?>" required>
             </label></p>
 
             <p><label>Email:
-                <input type="email" name="customer_email" value="<?php echo esc_attr($current_user->user_email); ?>" required>
+                <input type="email" name="customer_email" value="<?php echo esc_attr( $current_user->user_email ); ?>" required>
             </label></p>
 
             <p><label>Order Item:
-                <input name="order_items" value="<?php echo esc_attr($order_item_title); ?>" required readonly>
+                <input name="order_items" value="<?php echo esc_attr( $order_item_title ); ?>" required readonly>
             </label></p>
 
             <p><label>Total Price ($):
-                <input type="number" name="total_price" value="<?php echo esc_attr($total_price); ?>" required readonly>
+                <input type="number" name="total_price" value="<?php echo esc_attr( $total_price ); ?>" required readonly>
             </label></p>
 
-            <?php if ($stock_value <= 0 && isset($_GET['item_id'])) : ?>
+            <?php if ( $stock_value <= 0 && isset( $_GET[ 'item_id' ] ) ) : ?>
                 <p style="color:red;font-weight:bold;">Out of Stock</p>
             <?php else : ?>
                  
                 <p><label>Quantity:
-                    <input type="number" name="quantity" step="1" min="1" max="<?php echo esc_attr($stock_value); ?>" required>
+                    <input type="number" name="quantity" step="1" min="1" max="<?php echo esc_attr( $stock_value ); ?>" required>
                 </label></p>
 
-                <input type="hidden" name="user_id" value="<?php echo esc_attr($current_user->ID); ?>">
-                <input type="hidden" name="product_id" value="<?php echo isset($post_id) ? esc_attr($post_id) : ''; ?>">
+                <input type="hidden" name="user_id" value="<?php echo esc_attr( $current_user->ID ); ?>">
+                <input type="hidden" name="product_id" value="<?php echo isset( $post_id ) ? esc_attr( $post_id ) : ''; ?>">
 
                 <button id="kz_cafe_submit_order" type="submit">CHECKOUT</button>
                 <div id="kz-order-response"></div>

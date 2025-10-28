@@ -1,18 +1,18 @@
 <?php
 namespace kodezen\cafe\Admin;
 
-class kz_cafe_CPT{
-
     /**
      * Main CPT class
      */
 
-    function __construct() {
+class kz_cafe_CPT{
 
-        /**
-         * CPT register hook 
-         */
-        
+    /**
+     * CPT register hook 
+     */
+
+    function __construct() {
+       
         add_action( 'init', [ $this, 'kz_cafe_register' ] );
 
         /**
@@ -60,7 +60,7 @@ class kz_cafe_CPT{
             'labels'             => $kz_cafe_labels,
             'public'             => true,               
             'show_in_menu'       => true,
-            'taxonomies'         => ['kz_cafe_category'],               
+            'taxonomies'         => [ 'kz_cafe_category' ],               
             'capability_type'    => 'post',
             'capabilities'       => [               
             ],

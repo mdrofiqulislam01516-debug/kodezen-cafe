@@ -1,5 +1,5 @@
 <?php
-namespace kodezen\cafe\Admin;
+ namespace kodezen\cafe\Admin;
 
 /**
  * Order Action class
@@ -29,11 +29,11 @@ class kz_cafe_Order_Actions {
 
     public function add_order_columns( $columns ) {
 
-        $columns['product']      = __( 'Product', 'kodezen-cafe' );
-        $columns['quantity']     = __( 'Quantity', 'kodezen-cafe' );
-        $columns['order_items']  = __( 'Order Items', 'kodezen-cafe' );
-        $columns['total_price']  = __( 'Total Price ($)', 'kodezen-cafe' );
-        $columns['order_status'] = __( 'Status / Action', 'kodezen-cafe' );
+        $columns[ 'product' ]      = __( 'Product', 'kodezen-cafe' );
+        $columns[ 'quantity' ]     = __( 'Quantity', 'kodezen-cafe' );
+        $columns[ 'order_items' ]  = __( 'Order Items', 'kodezen-cafe' );
+        $columns[ 'total_price' ]  = __( 'Total Price ($)', 'kodezen-cafe' );
+        $columns[ 'order_status' ] = __( 'Status / Action', 'kodezen-cafe' );
 
         return $columns;
     }
@@ -86,17 +86,18 @@ class kz_cafe_Order_Actions {
 
     /**
      * Handle Approve/Cancel actions
-     */
+    */
+
 
     public function handle_order_actions() {
 
-        if ( ! isset( $_GET['kz_action'], $_GET['order_id'] ) ) return;
+        if ( ! isset( $_GET[ 'kz_action' ], $_GET['order_id'] ) ) return;
 
         if ( ! current_user_can( 'edit_posts' ) ) return;
 
-        if ( ! wp_verify_nonce( $_GET['_wpnonce'], 'kz_cafe_order_action' ) ) return;
+        if ( ! wp_verify_nonce( $_GET[ '_wpnonce' ], 'kz_cafe_order_action' ) ) return;
 
-            $order_id = intval( $_GET['order_id'] );
+            $order_id = intval( $_GET[ 'order_id' ] );
 
             $items = get_post_meta( $order_id, '_kz_cafe_order_items', true );
             $quantity = intval( get_post_meta( $order_id, '_kz_cafe_order_quantity', true ) );
@@ -105,7 +106,7 @@ class kz_cafe_Order_Actions {
          * aprove
          */
 
-        if ( $_GET['kz_action'] === 'approve' ) {
+        if ( $_GET[ 'kz_action' ] === 'approve' ) {
 
             update_post_meta( $order_id, '_kz_cafe_order_status', 'approved' );
 
@@ -135,7 +136,7 @@ class kz_cafe_Order_Actions {
         * Cancel 
         */
 
-        if ( $_GET['kz_action'] === 'cancel' ) {
+        if ( $_GET[ 'kz_action' ] === 'cancel' ) {
             update_post_meta( $order_id, '_kz_cafe_order_status', 'cancelled' );
 
             $product_id = intval( get_post_meta( $order_id, '_kz_cafe_product_id', true ) );

@@ -26,8 +26,8 @@ class kz_cafe_MetaBox {
             __( 'Menu Item Details', 'kodezen-cafe' ),
             [ $this, 'render_metabox' ],
             'kodezen_cafe',
-            'normal',
-            'high'
+            'side',
+            'default'
         );
     }
 
@@ -82,8 +82,8 @@ class kz_cafe_MetaBox {
          * Verify nonce
          */
 
-        if ( ! isset( $_POST['kz_cafe_meta_nonce'] ) ||
-             ! wp_verify_nonce( $_POST['kz_cafe_meta_nonce'], 'kz_cafe_save_meta' ) ) {
+        if ( ! isset( $_POST[ 'kz_cafe_meta_nonce' ] ) ||
+             ! wp_verify_nonce( $_POST[ 'kz_cafe_meta_nonce' ], 'kz_cafe_save_meta' ) ) {
             return;
         }
 
@@ -99,16 +99,16 @@ class kz_cafe_MetaBox {
          * save values 
          */
         
-        if ( isset( $_POST['kz_cafe_price'] ) ) {
-            update_post_meta( $post_id, '_kz_cafe_price', sanitize_text_field( $_POST['kz_cafe_price'] ) );
+        if ( isset( $_POST[ 'kz_cafe_price' ] ) ) {
+            update_post_meta( $post_id, '_kz_cafe_price', sanitize_text_field( $_POST[ 'kz_cafe_price' ] ) );
         }
 
-        if ( isset( $_POST['kz_cafe_ingredients'] ) ) {
-            update_post_meta( $post_id, '_kz_cafe_ingredients', sanitize_textarea_field( $_POST['kz_cafe_ingredients'] ) );
+        if ( isset( $_POST[ 'kz_cafe_ingredients' ] ) ) {
+            update_post_meta( $post_id, '_kz_cafe_ingredients', sanitize_textarea_field( $_POST[ 'kz_cafe_ingredients' ] ) );
         }
 
-        if ( isset( $_POST['kz_cafe_available'] ) ) {
-            update_post_meta( $post_id, '_kz_cafe_available', sanitize_text_field( $_POST['kz_cafe_available'] ) );
+        if ( isset( $_POST[ 'kz_cafe_available' ] ) ) {
+            update_post_meta( $post_id, '_kz_cafe_available', sanitize_text_field( $_POST[ 'kz_cafe_available' ] ) );
         }
     }
 }

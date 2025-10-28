@@ -12,7 +12,9 @@ class kz_cafe_Roles {
      */
 
     function __construct() {
-         add_action( 'init', [ $this, 'kz_cafe_role_add' ] );
+
+        add_action( 'init', [ $this, 'kz_cafe_role_add' ] );
+
     }
 
     /**
