@@ -42,7 +42,7 @@ class kz_cafe_Shortcode {
 
                 $price          = get_post_meta(get_the_ID(), '_kz_cafe_price', true);
                 $ingredients    = get_post_meta(get_the_ID(), '_kz_cafe_ingredients', true);
-                $stock          = intval(get_post_meta(get_the_ID(), '_kz_cafe_stock_value', true));
+                $stock_value          = intval(get_post_meta(get_the_ID(), '_kz_cafe_stock_value', true));
                 $thumbnail      = get_the_post_thumbnail(get_the_ID(), 'medium', ['style'=>'width:100%;border-radius:10px;']);
 
                 ?>
@@ -61,12 +61,12 @@ class kz_cafe_Shortcode {
                     <?php endif; ?>
 
                     <p><strong>Status:</strong> 
-                        <?php echo $stock > 0 ? '✅ Available (' . $stock . ')' : '❌ Out of Stock'; ?>
+                        <?php echo $stock_value > 0 ? '✅ Available (' . $stock_value .')' : '❌ Out of Stock'; ?>
                     </p>
 
                     <?php if (is_user_logged_in()) : ?>
 
-                        <?php if ( $stock > 0  ) : ?>                            
+                        <?php if ( $stock_value > 0  ) : ?>                            
                             <a href="<?php echo site_url('/order-form?item_id='. get_the_ID()); ?>">Order Now</a>
                         <?php else : ?>
 

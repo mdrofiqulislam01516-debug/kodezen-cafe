@@ -1,5 +1,5 @@
 <?php
- namespace kodezen\cafe\Admin;
+namespace kodezen\cafe\Admin;
 
 /**
  * Order Action class
@@ -99,58 +99,54 @@ class kz_cafe_Order_Actions {
 
             $order_id = intval( $_GET[ 'order_id' ] );
 
-            $items = get_post_meta( $order_id, '_kz_cafe_order_items', true );
+            
+            $product_id = get_post_meta( $order_id, '_kz_cafe_product_id', true ); 
             $quantity = intval( get_post_meta( $order_id, '_kz_cafe_order_quantity', true ) );
+                        
+            if ( $product_id <= 0 ) return;
+
+            $current_stock = intval( get_post_meta( $product_id, '_kz_cafe_stock_value', true ) );
+            $base_stock_value    = intval( get_post_meta( $product_id, '_kz_cafe_base_stock_value', true ) );
 
         /**
-         * aprove
-         */
+         * Approve order 
+         */  
 
-        if ( $_GET[ 'kz_action' ] === 'approve' ) {
+        if ( $_GET['kz_action'] === 'approve' ) {
+    
 
             update_post_meta( $order_id, '_kz_cafe_order_status', 'approved' );
 
-             /**
-              * _kz_cafe_stock meta key
-              */ 
+            $new_stock = $current_stock ;
 
-            $product_id = intval( $items );
-            $current_stock = intval( get_post_meta( $product_id, '_kz_cafe_stock_value', true ) );
-
-            if ( $current_stock > 0 ) {
-                $new_stock = max( 0, $current_stock - $quantity );
+            if ( $new_stock === 0 ) {
+                if ( $base_stock_value > 0 ) {
+                    update_post_meta( $product_id, '_kz_cafe_stock_value', $base_stock_value );
+                } else {
+                    update_post_meta( $product_id, '_kz_cafe_stock_value', 0 );
+                    update_post_meta( $order_id, '_kz_cafe_order_status', 'out_of_stock' );
+                }
+            } else {
                 update_post_meta( $product_id, '_kz_cafe_stock_value', $new_stock );
             }
+        }
 
         /**
-         * unavailable 
+         *  Cancel order 
          */
 
-            if ( $new_stock <= 0 ) {
-                update_post_meta( $product_id, '_kz_cafe_order_status', 'out_of_stock' );
-            }
-
-        }
-
-        /**
-        * Cancel 
-        */
-
-        if ( $_GET[ 'kz_action' ] === 'cancel' ) {
+        if ( $_GET['kz_action'] === 'cancel' ) {
             update_post_meta( $order_id, '_kz_cafe_order_status', 'cancelled' );
 
-            $product_id = intval( get_post_meta( $order_id, '_kz_cafe_product_id', true ) );
-            $quantity   = intval( get_post_meta( $order_id, '_kz_cafe_order_quantity', true ) );
-
-            if ( $product_id > 0 ) {
-                $current_stock = intval( get_post_meta( $product_id, '_kz_cafe_stock_value', true ) );
-                $new_stock = $current_stock + $quantity;
-                update_post_meta( $product_id, '_kz_cafe_stock_value', $new_stock );
-
-            }
+            $new_stock = $current_stock + $quantity;
+            update_post_meta( $product_id, '_kz_cafe_stock_value', $new_stock );
         }
 
-        wp_redirect( remove_query_arg( ['kz_action','order_id','_wpnonce'] ) );
+        wp_redirect( remove_query_arg( [ 'kz_action', 'order_id', '_wpnonce' ] ) );
         exit;
+
     }
 }
+
+
+
