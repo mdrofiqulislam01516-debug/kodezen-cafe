@@ -13,7 +13,7 @@ class kz_cafe_Form_Shortcode {
 
     function __construct() {
 
-        add_shortcode( 'kodezen-cafe-order', [ $this, 'render_order_form' ] );
+        add_shortcode( 'kodezen_cafe_order', [ $this, 'render_kz_cafe_order_form' ] );
 
     }
 
@@ -21,7 +21,7 @@ class kz_cafe_Form_Shortcode {
      * Render Order Form
      */
 
-    public function render_order_form() {
+    public function render_kz_cafe_order_form() {
 
         ob_start();
 

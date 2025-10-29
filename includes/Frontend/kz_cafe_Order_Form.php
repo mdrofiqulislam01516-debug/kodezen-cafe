@@ -17,21 +17,21 @@ class kz_cafe_Order_Form {
          * AJAX hooks
          */
 
-        add_action( 'wp_ajax_kz_cafe_submit_order', [ $this, 'submit_order' ] );
-        add_action( 'wp_ajax_nopriv_kz_cafe_submit_order', [ $this, 'submit_order' ] );
+        add_action( 'wp_ajax_kz_cafe_submit_order', [ $this, 'kz_cafe_submit_order' ] );
+        add_action( 'wp_ajax_nopriv_kz_cafe_submit_order', [ $this, 'kz_cafe_submit_order' ] );
 
         /**
          * Enqueue
          */ 
 
-        add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
+        add_action( 'wp_enqueue_scripts', [ $this, 'kz_cafe_enqueue_scripts' ] );
     }
 
     /**
      * Enqueue  AJAX order
      */
 
-    public function enqueue_scripts() {
+    public function kz_cafe_enqueue_scripts() {
 
         wp_enqueue_script(
             'kz-cafe-order',
@@ -51,7 +51,7 @@ class kz_cafe_Order_Form {
      * Handle AJAX 
      */
 
-    public function submit_order() {
+    public function kz_cafe_submit_order() {
 
         /**
          * Verify nonce

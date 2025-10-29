@@ -13,7 +13,7 @@ class kz_cafe_Order_List {
 
     function __construct() {
 
-        add_shortcode( 'kodezen-cafe-order-list', [ $this, 'render_order_list' ] );
+        add_shortcode( 'kodezen_cafe_order_list', [ $this, 'render_kz_cafe_order_list' ] );
 
     }
 
@@ -21,7 +21,7 @@ class kz_cafe_Order_List {
      * Render user's orders
      */
 
-    public function render_order_list( $atts ) {
+    public function render_kz_cafe_order_list( $atts ) {
 
         if ( ! is_user_logged_in() ) {
             return '<p>Please login to view your orders.</p>';

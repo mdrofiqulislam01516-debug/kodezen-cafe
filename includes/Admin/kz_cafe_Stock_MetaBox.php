@@ -13,8 +13,8 @@ class kz_cafe_Stock_MetaBox {
 
     function __construct() {
 
-        add_action( 'add_meta_boxes', [ $this, 'add_stock_metabox' ] );
-        add_action( 'save_post', [ $this, 'save_stock_metabox' ] );
+        add_action( 'add_meta_boxes', [ $this, 'kz_cafe_add_stock_metabox' ] );
+        add_action( 'save_post', [ $this, 'kz_cafe_save_stock_metabox' ] );
 
     }
 
@@ -22,12 +22,12 @@ class kz_cafe_Stock_MetaBox {
      * Register meta box
      */
 
-    public function add_stock_metabox() {
+    public function kz_cafe_add_stock_metabox() {
 
         add_meta_box(
             'kz_cafe_stock_box',
             __( 'Product Stock Info', 'kodezen-cafe' ),
-            [ $this, 'render_stock_metabox' ],
+            [ $this, 'render_kz_cafe_stock_metabox' ],
             'kodezen_cafe',
             'side',
             'default'
@@ -38,7 +38,7 @@ class kz_cafe_Stock_MetaBox {
      * Render meta box fields
      */
 
-    public function render_stock_metabox( $post ) {
+    public function render_kz_cafe_stock_metabox( $post ) {
 
         $stock_value      = get_post_meta( $post->ID, '_kz_cafe_stock_value', true );
 
@@ -59,7 +59,7 @@ class kz_cafe_Stock_MetaBox {
      * Save meta box data
      */
     
-    public function save_stock_metabox( $post_id ) {
+    public function kz_cafe_save_stock_metabox( $post_id ) {
 
         /**
          * Verify nonce

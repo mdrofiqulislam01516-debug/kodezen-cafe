@@ -19,7 +19,7 @@ class kz_cafe_CPT{
          * add new button hide hook 
          */
 
-        add_action( 'admin_head', [ $this, 'hide_add_new_button' ] );
+        add_action( 'admin_head', [ $this, 'kz_cafe_hide_add_new_button' ] );
     }
 
     /**
@@ -79,7 +79,7 @@ class kz_cafe_CPT{
      * Add_menu Button Hide
      */
 
-    public function hide_add_new_button() {
+    public function kz_cafe_hide_add_new_button() {
         $screen = get_current_screen();
         
         if ( $screen && $screen->post_type === 'kodezen_cafe' && $screen->base === 'edit' ) {

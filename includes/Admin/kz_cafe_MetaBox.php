@@ -13,8 +13,8 @@ class kz_cafe_MetaBox {
 
     function __construct() {
 
-        add_action( 'add_meta_boxes', [ $this, 'add_metabox' ] );
-        add_action( 'save_post', [ $this, 'save_metabox' ] );
+        add_action( 'add_meta_boxes', [ $this, 'kz_cafe_add_metabox' ] );
+        add_action( 'save_post', [ $this, 'kz_cafe_save_metabox' ] );
 
     }
 
@@ -22,7 +22,7 @@ class kz_cafe_MetaBox {
      * Register meta box
      */
 
-    public function add_metabox() {
+    public function kz_cafe_add_metabox() {
         
         add_meta_box(
             'kz_cafe_menu_details',
@@ -79,7 +79,7 @@ class kz_cafe_MetaBox {
      * Save meta box data
      */
 
-    public function save_metabox( $post_id ) {
+    public function kz_cafe_save_metabox( $post_id ) {
 
         /**
          * Verify nonce

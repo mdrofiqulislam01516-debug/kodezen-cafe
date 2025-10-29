@@ -13,14 +13,14 @@ class kz_cafe_Order_Actions {
 
     function __construct() {
 
-        add_filter( 'manage_kz_cafe_order_posts_columns', [ $this, 'add_order_columns' ] );
-        add_action( 'manage_kz_cafe_order_posts_custom_column', [ $this, 'render_order_columns' ], 10, 2 );
+        add_filter( 'manage_kz_cafe_order_posts_columns', [ $this, 'kz_cafe_add_order_columns' ] );
+        add_action( 'manage_kz_cafe_order_posts_custom_column', [ $this, 'render_kz_cafe_order_columns' ], 10, 2 );
 
         /**
          * Handle approve/cancel action
          */
 
-        add_action( 'admin_init', [ $this, 'handle_order_actions' ] );
+        add_action( 'admin_init', [ $this, 'handle_kz_cafe_order_actions' ] );
         
     }
 
@@ -28,7 +28,7 @@ class kz_cafe_Order_Actions {
      * Add custom column for Status Actions
      */
 
-    public function add_order_columns( $columns ) {
+    public function kz_cafe_add_order_columns( $columns ) {
 
         $columns[ 'product' ]      = __( 'Product', 'kodezen-cafe' );
         $columns[ 'quantity' ]     = __( 'Quantity', 'kodezen-cafe' );
@@ -43,7 +43,7 @@ class kz_cafe_Order_Actions {
      * Render custom column content
      */
 
-    public function render_order_columns( $column, $post_id ) {
+    public function render_kz_cafe_order_columns( $column, $post_id ) {
 
         if ( 'product' === $column ) {
             $product_id = get_post_meta( $post_id, '_kz_cafe_product_id', true );
@@ -90,7 +90,7 @@ class kz_cafe_Order_Actions {
     */
 
 
-    public function handle_order_actions() {
+    public function handle_kz_cafe_order_actions() {
 
         if ( ! isset( $_GET[ 'kz_action' ], $_GET['order_id'] ) ) return;
 

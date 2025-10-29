@@ -12,7 +12,7 @@ class kz_cafe_Shortcode {
 
     function __construct() {
 
-        add_shortcode( 'kodezen-cafe', [ $this, 'render_menu_items' ] );
+        add_shortcode( 'kodezen_cafe', [ $this, 'render_kz_cafe_menu_items' ] );
 
     }
 
@@ -20,7 +20,7 @@ class kz_cafe_Shortcode {
      * shortcode register 
      */
 
-    public function render_menu_items($atts) {
+    public function render_kz_cafe_menu_items($atts) {
 
         ob_start();
 
