@@ -4,6 +4,7 @@ namespace kodezen\cafe\Admin;
 /**
  * Order CPT class
  */
+
 class kz_cafe_Order_CPT {
 
     /**

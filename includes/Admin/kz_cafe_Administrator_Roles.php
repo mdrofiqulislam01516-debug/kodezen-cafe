@@ -5,7 +5,7 @@ namespace kodezen\cafe\Admin;
  * Administrator Role class 
  */
 
-class kz_cafe_Roles {
+class kz_cafe_Administrator_Roles {
 
     /**
      * Register Hook

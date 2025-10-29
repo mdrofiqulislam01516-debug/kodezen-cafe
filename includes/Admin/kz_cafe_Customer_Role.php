@@ -13,8 +13,6 @@ class kz_cafe_Customer_Role {
 
     function __construct() {
 
-        
-
         add_action( 'init', [ $this, 'kz_cafe_customer_role_add' ] );
 
     }

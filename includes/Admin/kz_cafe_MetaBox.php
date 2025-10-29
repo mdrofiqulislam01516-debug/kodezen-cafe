@@ -4,6 +4,7 @@ namespace kodezen\cafe\Admin;
 /**
  * Meta Box Class
  */
+
 class kz_cafe_MetaBox {
 
     /**
@@ -14,6 +15,7 @@ class kz_cafe_MetaBox {
 
         add_action( 'add_meta_boxes', [ $this, 'add_metabox' ] );
         add_action( 'save_post', [ $this, 'save_metabox' ] );
+
     }
 
     /**
@@ -21,6 +23,7 @@ class kz_cafe_MetaBox {
      */
 
     public function add_metabox() {
+        
         add_meta_box(
             'kz_cafe_menu_details',
             __( 'Menu Item Details', 'kodezen-cafe' ),

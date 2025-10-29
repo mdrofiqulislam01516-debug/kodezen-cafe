@@ -6,7 +6,7 @@
  * Version:           1.0.0
  * Requires at least: 6.0
  * Requires PHP:      8.0
- * Author:            Kodezen Tam
+ * Author:            Kodezen Team
  * Author URI:        https://kodezen.com/
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -93,7 +93,7 @@ final class Kodezen_Cafe {
             new \kodezen\cafe\Admin\kz_cafe_Stock_MetaBox();
             new \kodezen\cafe\Admin\kz_cafe_Order_CPT();
             new \kodezen\cafe\Admin\kz_cafe_Order_Actions();
-            new \kodezen\cafe\Admin\kz_cafe_Roles();
+            new \kodezen\cafe\Admin\kz_cafe_Administrator_Roles();
             new \kodezen\cafe\Admin\kz_cafe_Customer_Role();
                     
             /**

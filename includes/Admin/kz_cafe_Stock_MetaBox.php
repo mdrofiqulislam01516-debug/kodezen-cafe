@@ -41,27 +41,17 @@ class kz_cafe_Stock_MetaBox {
     public function render_stock_metabox( $post ) {
 
         $stock_value      = get_post_meta( $post->ID, '_kz_cafe_stock_value', true );
-        $base_stock_value = get_post_meta( $post->ID, '_kz_cafe_base_stock_value', true );
 
         wp_nonce_field( 'kz_cafe_stock_save', 'kz_cafe_stock_nonce' );
 
         ?>
+        
         <p>
             <label for="kz_cafe_stock_value"><strong><?php _e( 'Current Stock', 'kodezen-cafe' ); ?></strong></label><br>
             <input type="number" name="kz_cafe_stock_value" id="kz_cafe_stock_value" 
-                value="<?php echo esc_attr( $stock_value ); ?>" min="0" style="width:100%;">
-        </p>
+            value="<?php echo esc_attr( $stock_value ); ?>" min="0" style="width:100%;">
+        </p>       
 
-        <p>
-            <label for="kz_cafe_base_stock_value"><strong><?php _e( 'Base Stock (Default)', 'kodezen-cafe' ); ?></strong></label><br>
-            <input type="number" name="kz_cafe_base_stock_value" id="kz_cafe_base_stock_value" 
-            value="<?php echo esc_attr( $base_stock_value ); ?>" min="0" style="width:100%;">
-        </p>
-
-        <p style="font-size:12px;color:#666;">
-            
-        </p>
-        
         <?php
     }
 
@@ -92,9 +82,8 @@ class kz_cafe_Stock_MetaBox {
          */
 
         $stock_value      = isset( $_POST['kz_cafe_stock_value'] ) ? intval( $_POST['kz_cafe_stock_value'] ) : 0;
-        $base_stock_value = isset( $_POST['kz_cafe_base_stock_value'] ) ? intval( $_POST['kz_cafe_base_stock_value'] ) : 0;
 
         update_post_meta( $post_id, '_kz_cafe_stock_value', $stock_value );
-        update_post_meta( $post_id, '_kz_cafe_base_stock_value', $base_stock_value );
+
     }
 }

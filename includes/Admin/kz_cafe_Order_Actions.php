@@ -21,6 +21,7 @@ class kz_cafe_Order_Actions {
          */
 
         add_action( 'admin_init', [ $this, 'handle_order_actions' ] );
+        
     }
 
     /**
@@ -81,12 +82,6 @@ class kz_cafe_Order_Actions {
                 echo '<a href="' . esc_url( $approve_url ) . '" class="button button-primary button-small">Approve</a> ';
                 echo '<a href="' . esc_url( $cancel_url ) . '" class="button button-secondary button-small">Cancel</a>';
             }
-
-            // Out of stock হলে Stocked বাটন দেখাবে
-    if ( $status === 'out_of_stock' ) {
-        $stocked_url = wp_nonce_url( admin_url( 'edit.php?post_type=kz_cafe_order&kz_action=stocked&order_id=' . $post_id ), 'kz_cafe_order_action' );
-        echo '<a href="' . esc_url( $stocked_url ) . '" class="button button-primary button-small">Stocked</a>';
-    }
         }
     }
 
@@ -103,43 +98,20 @@ class kz_cafe_Order_Actions {
 
         if ( ! wp_verify_nonce( $_GET[ '_wpnonce' ], 'kz_cafe_order_action' ) ) return;
 
-            $order_id = intval( $_GET[ 'order_id' ] );
-
-            
+            $order_id = intval( $_GET[ 'order_id' ] );            
             $product_id = get_post_meta( $order_id, '_kz_cafe_product_id', true ); 
             $quantity = intval( get_post_meta( $order_id, '_kz_cafe_order_quantity', true ) );
-                        
-            if ( $product_id <= 0 ) return;
-
             $current_stock = intval( get_post_meta( $product_id, '_kz_cafe_stock_value', true ) );
-            $base_stock_value    = intval( get_post_meta( $product_id, '_kz_cafe_base_stock_value', true ) );
 
         /**
          * Approve order 
          */  
 
         if ( $_GET['kz_action'] === 'approve' ) {
-    
 
-            update_post_meta( $order_id, '_kz_cafe_order_status', 'approved' );
+                update_post_meta( $order_id, '_kz_cafe_order_status', 'approved' );
+                
         }
-
-        if ( $_GET['kz_action'] === 'stocked' ) {
-
-            $new_stock = $current_stock ;
-
-            if ( $new_stock === 0 ) {
-                if ( $base_stock_value > 0 ) {
-                    update_post_meta( $product_id, '_kz_cafe_stock_value', $base_stock_value );
-                } else {
-                    update_post_meta( $product_id, '_kz_cafe_stock_value', 0 );
-                    update_post_meta( $order_id, '_kz_cafe_order_status', 'out_of_stock' );
-                }
-            } else {
-                update_post_meta( $product_id, '_kz_cafe_stock_value', $new_stock );
-            }
-        }
-        
 
         /**
          *  Cancel order 
