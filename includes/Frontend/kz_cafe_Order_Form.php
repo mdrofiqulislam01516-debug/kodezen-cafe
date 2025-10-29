@@ -8,7 +8,7 @@ namespace kodezen\cafe\Frontend;
 class kz_cafe_Order_Form {
 
     /**
-     * Register Hook 
+     * Register Hook  
      */
 
     function __construct() {
