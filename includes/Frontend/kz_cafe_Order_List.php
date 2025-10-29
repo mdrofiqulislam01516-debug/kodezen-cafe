@@ -8,7 +8,7 @@ namespace kodezen\cafe\Frontend;
 class kz_cafe_Order_List {
 
     /**
-     * Shirtcode register hook 
+     * Shortcode register hook 
      */
 
     function __construct() {
