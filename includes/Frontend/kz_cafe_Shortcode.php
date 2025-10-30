@@ -34,7 +34,7 @@ class kz_cafe_Shortcode {
 
         if ( $query->have_posts() ) {
 
-            echo '<div class="kodezen-cafe-wrap" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px;">';
+            echo '<div class="kodezen_cafe_wrap">';
 
             while ($query->have_posts()) {
 
@@ -42,12 +42,12 @@ class kz_cafe_Shortcode {
 
                 $price          = get_post_meta(get_the_ID(), '_kz_cafe_price', true);
                 $ingredients    = get_post_meta(get_the_ID(), '_kz_cafe_ingredients', true);
-                $stock_value          = intval(get_post_meta(get_the_ID(), '_kz_cafe_stock_value', true));
+                $stock_value    = intval(get_post_meta(get_the_ID(), '_kz_cafe_stock_value', true));
                 $thumbnail      = get_the_post_thumbnail(get_the_ID(), 'medium', ['style'=>'width:100%;border-radius:10px;']);
 
                 ?>
 
-                <div class="kz-cafe-item" style="border:1px solid #ddd;padding:15px;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,0.1);">
+                <div class="kz_cafe_item">
 
                     <?php echo $thumbnail; ?>
                     <h3 style="margin:10px 0;"><?php the_title(); ?></h3>

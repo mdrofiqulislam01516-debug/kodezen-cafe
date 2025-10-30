@@ -72,6 +72,7 @@ final class Kodezen_Cafe {
         define( 'KZ_CAFE_FILE', __FILE__ );
         define( 'KZ_CAFE_PATH', __DIR__ );
         define( 'KZ_CAFE_URL', plugins_url( '', KZ_CAFE_FILE ) );
+        define( 'KZ_CAFE_ASSETS', KZ_CAFE_URL . '/assets' );
        
     }
 
@@ -94,6 +95,12 @@ final class Kodezen_Cafe {
             new \kodezen\cafe\Admin\kz_cafe_Order_CPT();
             new \kodezen\cafe\Admin\kz_cafe_Order_Actions();
             new \kodezen\cafe\Admin\kz_cafe_Customer_Role();
+
+            /**
+             * Assets
+             */
+
+             //new \kodezen\cafe\kz_cafe_Assets();
                     
             /**
              * Frontend
@@ -101,7 +108,7 @@ final class Kodezen_Cafe {
 
             new \kodezen\cafe\Frontend\kz_cafe_Shortcode();
             new \kodezen\cafe\Frontend\kz_cafe_Form_Shortcode();
-            new \kodezen\cafe\Frontend\kz_cafe_Order_Form();            
+            new \kodezen\cafe\Frontend\kz_cafe_Ajax_Order_Form();            
             new \kodezen\cafe\Frontend\kz_cafe_Order_List();
 
     }

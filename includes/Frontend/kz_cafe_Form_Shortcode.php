@@ -23,6 +23,10 @@ class kz_cafe_Form_Shortcode {
 
     public function render_kz_cafe_order_form() {
 
+        // wp_enqueue_script( 'kz_cafe_script' );
+        // wp_enqueue_style( 'kz_cafe_style' );
+         
+
         ob_start();
 
         /**

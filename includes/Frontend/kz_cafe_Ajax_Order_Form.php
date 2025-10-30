@@ -5,7 +5,7 @@ namespace kodezen\cafe\Frontend;
  * Handle Order Form 
  */
 
-class kz_cafe_Order_Form {
+class kz_cafe_Ajax_Order_Form {
 
     /**
      * Register Hook  
@@ -33,14 +33,32 @@ class kz_cafe_Order_Form {
 
     public function kz_cafe_enqueue_scripts() {
 
+        /**
+         * JS file
+         */
+
         wp_enqueue_script(
             'kz-cafe-order',
-            plugin_dir_url(__DIR__) . 'Frontend/js/kz_cafe_Order.js',
+            KZ_CAFE_ASSETS . '/js/kz_cafe_Order.js',
             ['jquery'],
-            filemtime(KZ_CAFE_PATH . '/includes/Frontend/js/kz_cafe_Order.js'),
+            filemtime( KZ_CAFE_PATH . '/assets/js/kz_cafe_Order.js' ),
             true
         );
 
+        /**
+         * CSS file
+         */
+
+        wp_enqueue_style(
+            'kz-cafe-style',
+            KZ_CAFE_ASSETS . '/css/kz_cafe_Style.css',        
+            filemtime( KZ_CAFE_PATH . '/assets/css/kz_cafe_Style.css' )
+        );
+
+        /**
+         * Localize AJAX
+         */
+        
         wp_localize_script( 'kz-cafe-order', 'kzCafeOrder', [
             'ajax_url' => admin_url( 'admin-ajax.php' ),
             'nonce'    => wp_create_nonce( 'kz_cafe_order_nonce' ),
@@ -52,7 +70,7 @@ class kz_cafe_Order_Form {
      */
 
     public function kz_cafe_submit_order() {
-
+        
         /**
          * Verify nonce
          */
