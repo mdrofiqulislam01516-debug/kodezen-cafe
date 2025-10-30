@@ -67,7 +67,7 @@ class kz_cafe_Shortcode {
                     <?php if (is_user_logged_in()) : ?>
 
                         <?php if ( $stock_value > 0  ) : ?>                            
-                            <a href="<?php echo site_url('/order-form?item_id='. get_the_ID()); ?>">Order Now</a>
+                            <a href="<?php echo site_url('/order-form?item_id='. get_the_ID()); ?>" class="kz_cafe_btn">Order Now</a>
                         <?php else : ?>
 
                             <button disabled style="opacity:0.5;cursor:not-allowed;">Out of Stock</button>

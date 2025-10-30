@@ -87,7 +87,7 @@ class kz_cafe_Form_Shortcode {
                 <input type="hidden" name="user_id" value="<?php echo esc_attr( $current_user->ID ); ?>">
                 <input type="hidden" name="product_id" value="<?php echo isset( $post_id ) ? esc_attr( $post_id ) : ''; ?>">
 
-                <button id="kz_cafe_submit_order" type="submit">CHECKOUT</button>
+                <button id="kz_cafe_submit_order" type="submit" class="kz_cafe_check">CHECKOUT</button>
                 <div id="kz-order-response"></div>
             <?php endif; ?>
         </form>
