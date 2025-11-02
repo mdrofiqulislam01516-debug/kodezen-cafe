@@ -79,7 +79,7 @@ final class Kodezen_Cafe {
     /**
      * plugin init
      * 
-     * @return vioid
+     * @return void
      */
 
     public function kz_cafe_init() {
